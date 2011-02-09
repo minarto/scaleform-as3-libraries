@@ -1,4 +1,4 @@
-package com.minarto.loop
+package com.minarto.utils.loop
 {
 	import flash.display.Shape;
 	import flash.events.Event;

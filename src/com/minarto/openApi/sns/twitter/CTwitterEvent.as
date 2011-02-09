@@ -1,4 +1,4 @@
-package com.minarto.twitter
+package com.minarto.openApi.sns.twitter
 {
 	public class CTwitterEvent
 	{

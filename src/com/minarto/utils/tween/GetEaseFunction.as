@@ -1,4 +1,4 @@
-package com.minarto.tween
+package com.minarto.utils.tween
 {
 	import caurina.transitions.Equations;
 
