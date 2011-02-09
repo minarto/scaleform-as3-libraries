@@ -15,7 +15,7 @@ package com.minarto.ui.virtualKeyboard
 	 */	
 	public class VirtualKeyboardBase extends DefaultSprite
 	{
-		protected var keyButtonList:Vector.<KeyButtonInfo> = new Vector.<KeyButtonInfo>();
+		protected var keyButtonList:Vector.<KeyButtonInfo> = Vector.<KeyButtonInfo>([]);
 		public var keyMode:String;
 		public var language:String;
 		
