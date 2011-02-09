@@ -9,13 +9,13 @@ package com.minarto.display.bitmap
 	 * @author Minarto
 	 * 
 	 */	
-	public class CalBitmapColor
+	public class ColorPattern
 	{
 		/**
 		 * 
 		 * 
 		 */		
-		public function CalBitmapColor()
+		public function ColorPattern()
 		{
 		}
 		
