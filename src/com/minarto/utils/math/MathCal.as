@@ -1,7 +1,20 @@
-package com.minarto.utils.cal
+package com.minarto.utils.math
 {
+	/**
+	 * 
+	 * @author Minarto
+	 * 
+	 */	
 	public class MathCal
 	{
+		/**
+		 * 
+		 * @param $num0
+		 * @param $operator
+		 * @param $num1
+		 * @return 
+		 * 
+		 */		
 		public static function decimalCal($num0:Number, $operator:String, $num1:Number):Number
 		{
 			if(isNaN($num0) || isNaN($num1))	var result:Number = NaN;
