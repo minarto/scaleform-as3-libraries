@@ -1,4 +1,4 @@
-package com.minarto.openApi.sns.twitter
+package com.minarto.openApi.twitter
 {
 	import com.dborisenko.api.twitter.TwitterAPI;
 	import com.dborisenko.api.twitter.commands.status.UpdateStatus;
