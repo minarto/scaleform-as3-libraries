@@ -59,7 +59,7 @@ package com.minarto.openApi.google.shortURL
 			{
 				close();
 			}
-			catch(error:Error)	{}
+			catch($error:Error)	{}
 		}
 		
 		
