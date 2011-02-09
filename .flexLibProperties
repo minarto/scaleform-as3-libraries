@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" version="3">
-  <includeClasses/>
+  <includeClasses>
+    <classEntry path="com.minarto.display.graphics.DrawingBase"/>
+    <classEntry path="com.minarto.utils.cal.MathCal"/>
+  </includeClasses>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>
