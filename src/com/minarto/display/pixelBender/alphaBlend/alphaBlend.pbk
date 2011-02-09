@@ -1,0 +1,22 @@
+<languageVersion : 1.0;>
+
+kernel NewFilter
+<   namespace : "minarto";
+    vendor : "Your Vendor";
+    version : 1;
+    description : "your description";
+>
+{
+    input image4 bottom;
+    input image4 top;
+    output pixel4 dst;
+
+    void
+    evaluatePixel()
+    {
+        pixel4 b = sampleNearest(bottom, outCoord());
+        pixel4 t = sampleNearest(top, outCoord());
+           
+        dst = t + (1.0 - t.a) * b;
+    }
+}
