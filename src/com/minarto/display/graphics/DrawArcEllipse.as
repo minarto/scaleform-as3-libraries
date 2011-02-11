@@ -10,7 +10,7 @@ package com.minarto.display.graphics
 	 * @author Minarto
 	 * 
 	 */	
-	public final class DrawArcCircle extends DrawingBase
+	public final class DrawArcEllipse extends DrawingBase
 	{
 		private const pi:Number = Math.PI / 180;
 		private const absF:Function = Math.abs;
@@ -23,7 +23,7 @@ package com.minarto.display.graphics
 		 * 
 		 * 
 		 */		
-		public function DrawArcCircle()
+		public function DrawArcEllipse()
 		{
 			super();
 		}
@@ -35,9 +35,7 @@ package com.minarto.display.graphics
 			
 			if(graphicsStroke)	graphicsData[0] = graphicsStroke;
 			if(graphicsFill)	graphicsData.push(graphicsFill);
-			if(graphicsPath)	graphicsData.push(graphicsPath);
-			graphicsData.push(endFill);
-			graphicsData.push(endStrocke);
+			graphicsData.push(graphicsPath);
 		}
 		
 		
@@ -51,27 +49,25 @@ package com.minarto.display.graphics
 		 * @param $angle
 		 * 
 		 */		
-		public function draw($graphics:Graphics, $x:Number, $y:Number, $radius:Number, $yradius:Number, $startAngle:Number, $angle:Number):void
+		public function draw($x:Number, $y:Number, $radius:Number, $yradius:Number, $startAngle:Number, $angle:Number):void
 		{
 			var angle:Number = absF($angle);
 			if(angle >= 360)	$angle = $angle < 0 ? - 360 : 360;
 			
 			var commands:Vector.<int> = graphicsPath.commands;
-			commands.length = 0;
 			var data:Vector.<Number> = graphicsPath.data;
-			data.length = 0;
 			
 			var radian:Number = $startAngle * pi;
 			var x:Number = cosF(radian) * $radius;
 			var y:Number = sinF(radian) * $yradius;
 			
-			commands[0] = 2;
-			data[0] = $x + x;
-			data[1] = $y + y;
+			//commands.push(2);
+			//data.push($x + x, $y + y);
 			
 			var i:uint;
 			var length:uint = ceilF(Math2.decimalCal(absF($angle), "/", 45));
 			angle = $angle / length;
+			trace(length, angle)
 			
 			var cx:Number;
 			var cy:Number;
@@ -94,7 +90,8 @@ package com.minarto.display.graphics
 				cy = y;
 			}
 			
-			$graphics.drawGraphicsData(graphicsData);
+			defaultDraw();
+			//graphics.drawGraphicsData(graphicsData);
 		}
 	}
 }

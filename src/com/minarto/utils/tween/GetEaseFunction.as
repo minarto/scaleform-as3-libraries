@@ -8,7 +8,7 @@ package com.minarto.utils.tween
 	 * @author Minarto
 	 * 
 	 */	
-	public class GetEaseFunction extends Equations
+	public final class GetEaseFunction extends Equations
 	{
 		/**
 		 * 

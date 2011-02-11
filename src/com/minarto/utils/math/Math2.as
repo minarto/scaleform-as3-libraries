@@ -5,7 +5,7 @@ package com.minarto.utils.math
 	 * @author Minarto
 	 * 
 	 */	
-	public class Math2
+	public final class Math2
 	{
 		/**
 		 * 
@@ -30,9 +30,11 @@ package com.minarto.utils.math
 				if(num1 < 0)	num1 = ns1.length;
 				num1 = ns1.length - num1;
 				
-				var pow:uint = Math.max(num0, num1) - 1;
-				num0 = Number($num0.toFixed(pow).split(".").join(""));
-				num1 = Number($num1.toFixed(pow).split(".").join(""));
+				var pow:uint = Math.max(num0, num1);
+				num1 = Math.pow(10, pow);
+				num0 = Number(ns0.split(".").join("")) * num1;
+				num1 = Number(ns1.split(".").join("")) * num1;
+				
 				
 				switch($operator)
 				{
@@ -57,7 +59,7 @@ package com.minarto.utils.math
 						}
 						break;
 					default :
-						throw(new Error("$operator error"));
+						throw(new Error("operator error"));
 				}
 			}
 			
