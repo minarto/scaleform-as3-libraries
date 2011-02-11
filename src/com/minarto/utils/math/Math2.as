@@ -40,7 +40,7 @@ package com.minarto.utils.math
 						result = (num0 + num1) / Math.pow(10, pow);
 						break;
 					case "-" :
-						result = (num0 + num1) / Math.pow(10, pow);
+						result = (num0 - num1) / Math.pow(10, pow);
 						break;
 					case "*" :
 						result = (num0 * num1) / Math.pow(10, pow << 1);
