@@ -11,7 +11,7 @@ package com.minarto.utils.loop
 	 * @author Minarto
 	 * 
 	 */	
-	public class CustomLoop extends Shape
+	public class SplitLoop extends Shape
 	{
 		public var limit:uint = 500;
 		private var count:uint;
@@ -23,7 +23,7 @@ package com.minarto.utils.loop
 		 * 
 		 * 
 		 */		
-		public function CustomLoop()
+		public function SplitLoop()
 		{
 			functions = new Vector.<FunctionItem>();
 		}
