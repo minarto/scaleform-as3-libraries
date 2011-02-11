@@ -1,5 +1,7 @@
 package com.minarto.display.graphics
 {
+	import com.minarto.utils.math.Math2;
+	
 	import flash.display.Graphics;
 
 	
@@ -68,7 +70,7 @@ package com.minarto.display.graphics
 			data[1] = sy;
 			
 			var i:uint;
-			var length:uint = ceilF(absF($angle) % 360 / 45);
+			var length:uint = ceilF(Math2.decimalCal(absF($angle), "/", 45));
 			angle = $angle / length;
 			
 			$graphics.drawGraphicsData(graphicsData);

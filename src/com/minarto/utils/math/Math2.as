@@ -5,7 +5,7 @@ package com.minarto.utils.math
 	 * @author Minarto
 	 * 
 	 */	
-	public class MathCal
+	public class Math2
 	{
 		/**
 		 * 

@@ -142,6 +142,26 @@ package com.minarto.utils.loop
 				}
 			}
 		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function pause():void
+		{
+			removeEventListener(Event.ENTER_FRAME, hnEnterFrame);
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function resume():void
+		{
+			if(!hasEventListener(Event.ENTER_FRAME) && functionLength)	addEventListener(Event.ENTER_FRAME, hnEnterFrame);
+		}
 	}
 }
 
