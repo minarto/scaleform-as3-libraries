@@ -36,8 +36,6 @@ package com.minarto.display.graphics
 			if(graphicsStroke)	graphicsData[0] = graphicsStroke;
 			if(graphicsFill)	graphicsData.push(graphicsFill);
 			if(graphicsPath)	graphicsData.push(graphicsPath);
-			graphicsData.push(endFill);
-			graphicsData.push(endStrocke);
 		}
 		
 		
