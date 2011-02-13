@@ -102,11 +102,7 @@ package com.minarto.display.graphics
 		 */		
 		public function defaultDraw():void
 		{
-			graphics.lineStyle(__graphicsStroke.thickness);
-			graphics.drawPath(__graphicsPath.commands, __graphicsPath.data);
-			trace(this, __graphicsPath.commands)
-			trace(this, __graphicsPath.data)
-			//graphics.drawGraphicsData(__graphicsData);
+			graphics.drawGraphicsData(__graphicsData);
 		}
 	}
 }

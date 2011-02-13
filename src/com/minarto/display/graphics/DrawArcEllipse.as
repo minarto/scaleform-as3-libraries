@@ -61,37 +61,39 @@ package com.minarto.display.graphics
 			var x:Number = cosF(radian) * $radius;
 			var y:Number = sinF(radian) * $yradius;
 			
-			//commands.push(2);
-			//data.push($x + x, $y + y);
+			commands.push(2);
+			data.push($x + x, $y + y);
 			
-			var i:uint;
-			var length:uint = ceilF(Math2.decimalCal(absF($angle), "/", 45));
-			angle = $angle / length;
-			trace(length, angle)
+			var length:uint = ceilF(absF(Math2.decimalCal($angle, "/", 45)));
+			var i:int = - length - 1;
 			
-			var cx:Number;
-			var cy:Number;
-			var addRadian:Number = angle * pi;
+			var addRadian:Number = $angle / length * pi;
+			
+			var px:Number = x;
+			var py:Number = y;
+			
+			var pyx:Number;
+			var ypx:Number;
+			
 			var radius:Number = $radius * $radius;
 			var yradius:Number = $yradius * $yradius;
-			while(++i < length)
+			while(++ i < 0)
 			{
 				radian += addRadian;
 				x = cosF(radian) * $radius;
 				y = sinF(radian) * $yradius;
 				
-				cx = radius * (y - cy) / (cx * y - x * cy);
-				cy = yradius * (x - cx) / (cy * x - y * cx);
+				pyx = py * x;
+				ypx = y * px;
 				
 				commands.push(3);
-				data.push($x + cx, $y + cy, $x + x, $y + y);
+				data.push($x + radius * (py - y) / (pyx - ypx), $y + yradius * (px - x) / (ypx - pyx), $x + x, $y + y);
 				
-				cx = x;
-				cy = y;
+				px = x;
+				py = y;
 			}
 			
-			defaultDraw();
-			//graphics.drawGraphicsData(graphicsData);
+			graphics.drawGraphicsData(graphicsData);
 		}
 	}
 }
