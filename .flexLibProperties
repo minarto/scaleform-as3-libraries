@@ -269,11 +269,12 @@
     <classEntry path="com.minarto.web.MultiTabBrowserManagerBase"/>
     <classEntry path="com.minarto.web.WebBrowserBase"/>
     <classEntry path="com.minarto.web.WebBrowserEventType"/>
+    <classEntry path="com.minarto.display.graphics.DrawSpLine"/>
   </includeClasses>
   <includeResources>
-    <resourceEntry destPath="com/coderanger/USAGE.txt" sourcePath="com/coderanger/USAGE.txt"/>
     <resourceEntry destPath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj" sourcePath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj"/>
     <resourceEntry destPath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbk" sourcePath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbk"/>
+    <resourceEntry destPath="com/coderanger/USAGE.txt" sourcePath="com/coderanger/USAGE.txt"/>
   </includeResources>
   <namespaceManifests/>
 </flexLibProperties>

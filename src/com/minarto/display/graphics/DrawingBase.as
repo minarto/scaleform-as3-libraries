@@ -71,7 +71,6 @@ package com.minarto.display.graphics
 		 */		
 		public function DrawingBase()
 		{
-			__graphicsData = Vector.<IGraphicsData>([]);
 			init();
 		}
 		
@@ -82,7 +81,11 @@ package com.minarto.display.graphics
 		 */		
 		public function init():void
 		{
-			__graphicsData.length = 0;
+			__graphicsData = Vector.<IGraphicsData>([]);
+			
+			if(graphicsStroke)	graphicsData[0] = graphicsStroke;
+			if(graphicsFill)	graphicsData.push(graphicsFill);
+			graphicsData.push(graphicsPath);
 		}
 		
 		
