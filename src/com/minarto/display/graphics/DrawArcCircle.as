@@ -1,10 +1,5 @@
 package com.minarto.display.graphics
 {
-	import com.minarto.utils.math.Math2;
-	
-	import flash.display.Graphics;
-	
-	
 	/**
 	 * 
 	 * @author Minarto
@@ -22,16 +17,6 @@ package com.minarto.display.graphics
 		public function DrawArcCircle()
 		{
 			super();
-		}
-		
-		
-		override public function init():void
-		{
-			super.init();
-			
-			if(graphicsStroke)	graphicsData[0] = graphicsStroke;
-			if(graphicsFill)	graphicsData.push(graphicsFill);
-			graphicsData.push(graphicsPath);
 		}
 		
 		

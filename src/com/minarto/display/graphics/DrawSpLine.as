@@ -1,5 +1,10 @@
 package com.minarto.display.graphics
 {
+	/**
+	 * 
+	 * @author Minarto
+	 * 
+	 */	
 	public class DrawSpLine extends DrawingBase
 	{
 		public function DrawSpLine()

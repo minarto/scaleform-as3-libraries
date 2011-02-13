@@ -1,8 +1,6 @@
 package com.minarto.display.graphics
 {
 	import com.minarto.utils.math.Math2;
-	
-	import flash.display.Graphics;
 
 	
 	/**
