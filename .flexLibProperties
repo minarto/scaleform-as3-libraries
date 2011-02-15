@@ -270,6 +270,7 @@
     <classEntry path="com.minarto.web.WebBrowserBase"/>
     <classEntry path="com.minarto.web.WebBrowserEventType"/>
     <classEntry path="com.minarto.display.graphics.DrawSpLine"/>
+    <classEntry path="com.minarto.display.AlphaBlendJobContainer"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj" sourcePath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj"/>
