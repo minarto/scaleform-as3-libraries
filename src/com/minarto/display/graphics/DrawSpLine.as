@@ -36,8 +36,8 @@ package com.minarto.display.graphics
 			var sx0:Number = $points[0] * 2 - $points[2];
 			var sy0:Number = $points[1] * 2 - $points[3];
 			
-			var sx1:Number = $points[length-2] * 2 - $points[length-4];
-			var sy1:Number = $points[length-1] * 2 - $points[length-3];
+			var sx1:Number = $points[length - 2] * 2 - $points[length - 4];
+			var sy1:Number = $points[length - 1] * 2 - $points[length - 3];
 			
 			var fd:Number = 1 / $n;
 			
