@@ -31,6 +31,12 @@ package com.minarto.display
 		protected var blendJob:AlphaBlendJob;
 		
 		
+		override public function get numChildren():int
+		{
+			return	bitmapDatas.length;
+		}
+		
+		
 		/**
 		 * 
 		 * 
@@ -129,7 +135,7 @@ package com.minarto.display
 			{
 				blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
 				count = - 1;
-				var length:uint = bitmapDatas.length;
+				var length:uint = numChildren;
 				
 				var bd:BitmapData;
 				while(++ count < length)
@@ -171,7 +177,7 @@ package com.minarto.display
 		private function hnShaderComplete($e:ShaderEvent):void
 		{
 			++ count;
-			if(count < bitmapDatas.length)
+			if(count < numChildren)
 			{
 				drawIndex(count, true);
 			}
