@@ -58,8 +58,6 @@ package com.minarto.display
 			if(bitmapData)	bitmapData.dispose();
 			bitmap = new Bitmap(bitmapData);
 			addChildAt(bitmap, 0);
-			
-			blendJob = new AlphaBlendJob(bitmapData, width, height);
 		}
 		
 		
@@ -123,24 +121,14 @@ package com.minarto.display
 		 * 
 		 * 
 		 */		
-		public function draw($waitForCompletion:Boolean=false):void
+		public function draw():void
 		{
-			if($waitForCompletion)
+			count = - 1;
+			var length:uint = numChildren;
+			var bd:BitmapData;
+			while(++ count < length)
 			{
-				blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
-				count = - 1;
-				var length:uint = numChildren;
-				var bd:BitmapData;
-				while(++ count < length)
-				{
-					drawIndex(count, true);
-				}
-			}
-			else
-			{
-				count = 0;
-				blendJob.addEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
-				drawIndex(count, false);
+				drawIndex(count);
 			}
 		}
 		
@@ -150,9 +138,8 @@ package com.minarto.display
 		 * @param $e
 		 * 
 		 */		
-		private function drawIndex($index:uint, $waitForCompletion:Boolean=false):void
+		private function drawIndex($index:uint):void
 		{
-			trace($index, $waitForCompletion)
 			var item:BitmapItem = bitmapDatas[$index];
 			
 			var bd:BitmapData = item.bitmapData;
@@ -164,13 +151,10 @@ package com.minarto.display
 			topBitmapData = new BitmapData(width, height, true, 0x00000000);
 			topBitmapData.copyPixels(bd, sourceRect, desPoint);
 			
-			if($waitForCompletion)
-			{
-				blendJob = new AlphaBlendJob(bitmapData, width, height);
-			}
+			blendJob = new AlphaBlendJob(bitmapData, width, height);
 			blendJob.bottomBitmapData = bitmapData;
 			blendJob.topBitmapData = topBitmapData;
-			blendJob.start($waitForCompletion);
+			blendJob.start(true);
 			
 			
 		}
@@ -183,16 +167,7 @@ package com.minarto.display
 		 */		
 		private function hnShaderComplete($e:ShaderEvent):void
 		{
-			trace($e)
-			++ count;
-			if(count < numChildren)
-			{
-				drawIndex(count, false);
-			}
-			else
-			{
-				dispatchEvent($e);
-			}
+			
 			
 		}
 		
@@ -218,10 +193,6 @@ package com.minarto.display
 			bitmap.bitmapData = bitmapData;
 			
 			topBitmapData = new BitmapData(width, height, true, 0x00000000);
-			
-			blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
-			blendJob = new AlphaBlendJob(bitmapData, width, height);
-			blendJob.bottomBitmapData = bitmapData;
 		}
 	}
 }
