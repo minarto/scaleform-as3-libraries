@@ -125,22 +125,21 @@ package com.minarto.display
 		 */		
 		public function draw($waitForCompletion:Boolean=false):void
 		{
-			if($waitForCompletion)
+			if(!$waitForCompletion)
 			{
 				count = 0;
 				blendJob.addEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
-				drawIndex(count, true);
+				drawIndex(count, false);
 			}
 			else
 			{
-				//blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
+				blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
 				count = - 1;
 				var length:uint = numChildren;
-				trace($waitForCompletion, length)
 				var bd:BitmapData;
 				while(++ count < length)
 				{
-					drawIndex(count, false);
+					drawIndex(count, true);
 				}
 			}
 		}
@@ -153,6 +152,7 @@ package com.minarto.display
 		 */		
 		private function drawIndex($index:uint, $waitForCompletion:Boolean=false):void
 		{
+			trace($index, $waitForCompletion)
 			var item:BitmapItem = bitmapDatas[$index];
 			
 			var bd:BitmapData = item.bitmapData;
@@ -164,11 +164,11 @@ package com.minarto.display
 			topBitmapData = new BitmapData(width, height, true, 0x00000000);
 			topBitmapData.copyPixels(bd, sourceRect, desPoint);
 			
-			blendJob = new AlphaBlendJob(bitmapData, width, height);
 			blendJob.bottomBitmapData = bitmapData;
 			blendJob.topBitmapData = topBitmapData;
 			blendJob.start($waitForCompletion);
-			trace($index)
+			
+			
 		}
 		
 		
@@ -179,11 +179,10 @@ package com.minarto.display
 		 */		
 		private function hnShaderComplete($e:ShaderEvent):void
 		{
-			trace($e)
 			++ count;
 			if(count < numChildren)
 			{
-				drawIndex(count, true);
+				drawIndex(count, false);
 			}
 			else
 			{
