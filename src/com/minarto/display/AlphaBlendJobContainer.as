@@ -133,10 +133,10 @@ package com.minarto.display
 			}
 			else
 			{
-				blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
+				//blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
 				count = - 1;
 				var length:uint = numChildren;
-				
+				trace($waitForCompletion, length)
 				var bd:BitmapData;
 				while(++ count < length)
 				{
@@ -161,11 +161,14 @@ package com.minarto.display
 			desPoint.x = item.x;
 			desPoint.y = item.y;
 			
-			topBitmapData.dispose();
+			topBitmapData = new BitmapData(width, height, true, 0x00000000);
 			topBitmapData.copyPixels(bd, sourceRect, desPoint);
 			
+			blendJob = new AlphaBlendJob(bitmapData, width, height);
+			blendJob.bottomBitmapData = bitmapData;
 			blendJob.topBitmapData = topBitmapData;
 			blendJob.start($waitForCompletion);
+			trace($index)
 		}
 		
 		
@@ -176,6 +179,7 @@ package com.minarto.display
 		 */		
 		private function hnShaderComplete($e:ShaderEvent):void
 		{
+			trace($e)
 			++ count;
 			if(count < numChildren)
 			{
@@ -185,6 +189,7 @@ package com.minarto.display
 			{
 				dispatchEvent($e);
 			}
+			
 		}
 		
 		
