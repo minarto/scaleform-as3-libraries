@@ -7,6 +7,7 @@ package com.minarto.display
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.ShaderEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
@@ -59,6 +60,8 @@ package com.minarto.display
 		override public function destroy():void
 		{
 			removeEventListener(Event.RESIZE, hnResize);
+			
+			blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
 		}
 		
 		
@@ -68,9 +71,17 @@ package com.minarto.display
 		 */		
 		public function add($obj:DisplayObject):BitmapItem
 		{
-			var bd:BitmapData = new BitmapData($obj.width, $obj.height, true, 0x00000000);
-			bd.draw($obj as DisplayObject);
-			var item:BitmapItem = new BitmapItem($obj.x, $obj.y, bd);
+			var bm:Bitmap = $obj as Bitmap;
+			if(bm)
+			{
+				var bd:BitmapData = bm.bitmapData;
+			}
+			else
+			{
+				bd = new BitmapData($obj.width, $obj.height, true, 0x00000000);
+				bd.draw($obj as DisplayObject);
+			}
+			var item:BitmapItem = new BitmapItem($obj.x, $obj.y, bd, $obj);
 			
 			bitmapDatas.push(item);
 			
@@ -84,44 +95,89 @@ package com.minarto.display
 		 */		
 		public function addAt($obj:DisplayObject, $index:uint):BitmapItem
 		{
-			var bd:BitmapData = new BitmapData($obj.width, $obj.height, true, 0x00000000);
-			bd.draw($obj as DisplayObject);
-			var item:BitmapItem = new BitmapItem($obj.x, $obj.y, bd);
+			var bm:Bitmap = $obj as Bitmap;
+			if(bm)
+			{
+				var bd:BitmapData = bm.bitmapData;
+			}
+			else
+			{
+				bd = new BitmapData($obj.width, $obj.height, true, 0x00000000);
+				bd.draw($obj as DisplayObject);
+			}
+			var item:BitmapItem = new BitmapItem($obj.x, $obj.y, bd, $obj);
 			
 			bitmapDatas.splice($index, 0, item);
 			
 			return	item;
 		}
 		
-		
+		private var count:int;
 		/**
 		 * 
 		 * 
 		 */		
-		public function draw():void
+		public function draw($waitForCompletion:Boolean=false):void
 		{
-			var i:int = - 1;
-			var length:uint = bitmapDatas.length;
-			
-			var item:BitmapItem;
-				
-			var bd:BitmapData;
-			var w:int;
-			var h:int;
-			while(++ i < length)
+			if($waitForCompletion)
 			{
-				item = bitmapDatas[i];
-				bd = item.bitmapData;
-				sourceRect.width = bd.width;
-				sourceRect.height = bd.height
-				desPoint.x = item.x;
-				desPoint.y = item.y;
+				count = 0;
+				blendJob.addEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
+				addDraw(count, true);
+			}
+			else
+			{
+				blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
+				count = - 1;
+				var length:uint = bitmapDatas.length;
 				
-				topBitmapData.dispose();
-				topBitmapData.copyPixels(bd, sourceRect, desPoint);
-				
-				blendJob.topBitmapData = topBitmapData;
-				blendJob.start(false);
+				var bd:BitmapData;
+				while(++ count < length)
+				{
+					addDraw(count, false);
+				}
+			}
+		}
+		
+		
+		/**
+		 * 
+		 * @param $e
+		 * 
+		 */		
+		private function addDraw($index:uint, $waitForCompletion:Boolean=false):void
+		{
+			var item:BitmapItem = bitmapDatas[$index];
+			
+			var bd:BitmapData = item.bitmapData;
+			sourceRect.width = bd.width;
+			sourceRect.height = bd.height
+			desPoint.x = item.x;
+			desPoint.y = item.y;
+			
+			topBitmapData.dispose();
+			topBitmapData.copyPixels(bd, sourceRect, desPoint);
+			
+			blendJob.topBitmapData = topBitmapData;
+			blendJob.start($waitForCompletion);
+		}
+		
+		
+		/**
+		 * 
+		 * @param $e
+		 * 
+		 */		
+		private function hnShaderComplete($e:ShaderEvent):void
+		{
+			++ count;
+			if(count < bitmapDatas.length)
+			{
+				addDraw(count, true);
+			}
+			else
+			{
+				dispatchEvent($e);
 			}
 		}
 		
@@ -147,6 +203,8 @@ package com.minarto.display
 			bitmap.bitmapData = bitmapData;
 			
 			topBitmapData = new BitmapData(width, height, true, 0x00000000);
+			
+			blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
 			blendJob = new AlphaBlendJob(bitmapData, width, height);
 			blendJob.bottomBitmapData = bitmapData;
 		}
@@ -156,12 +214,14 @@ package com.minarto.display
 
 
 import flash.display.BitmapData;
+import flash.display.DisplayObject;
 
 final class BitmapItem
 {
 	public var x:Number;
 	public var y:Number;
 	public var bitmapData:BitmapData;
+	public var sourceObject:DisplayObject;
 	
 	
 	/**
@@ -172,10 +232,11 @@ final class BitmapItem
 	 * @param $fillColor
 	 * 
 	 */	
-	public function BitmapItem($x:Number, $y:Number, $bitmapData:BitmapData)
+	public function BitmapItem($x:Number, $y:Number, $bitmapData:BitmapData, $sourceObject:DisplayObject=null)
 	{
 		x = $x;
 		y = $y;
 		bitmapData = $bitmapData;
+		sourceObject = $sourceObject;
 	}
 }
