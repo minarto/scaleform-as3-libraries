@@ -123,7 +123,7 @@ package com.minarto.display
 			{
 				count = 0;
 				blendJob.addEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
-				addDraw(count, true);
+				drawIndex(count, true);
 			}
 			else
 			{
@@ -134,7 +134,7 @@ package com.minarto.display
 				var bd:BitmapData;
 				while(++ count < length)
 				{
-					addDraw(count, false);
+					drawIndex(count, false);
 				}
 			}
 		}
@@ -145,7 +145,7 @@ package com.minarto.display
 		 * @param $e
 		 * 
 		 */		
-		private function addDraw($index:uint, $waitForCompletion:Boolean=false):void
+		private function drawIndex($index:uint, $waitForCompletion:Boolean=false):void
 		{
 			var item:BitmapItem = bitmapDatas[$index];
 			
@@ -173,7 +173,7 @@ package com.minarto.display
 			++ count;
 			if(count < bitmapDatas.length)
 			{
-				addDraw(count, true);
+				drawIndex(count, true);
 			}
 			else
 			{
