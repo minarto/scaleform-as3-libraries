@@ -73,7 +73,7 @@ package com.minarto.display
 		 * 
 		 * 
 		 */		
-		public function add($obj:DisplayObject):BitmapItem
+		public function add($obj:DisplayObject):DisplayObject
 		{
 			var bm:Bitmap = $obj as Bitmap;
 			if(bm)
@@ -89,7 +89,7 @@ package com.minarto.display
 			
 			bitmapDatas.push(item);
 			
-			return	item;
+			return	$obj;
 		}
 		
 		
@@ -97,7 +97,7 @@ package com.minarto.display
 		 * 
 		 * 
 		 */		
-		public function addAt($obj:DisplayObject, $index:uint):BitmapItem
+		public function addAt($obj:DisplayObject, $index:uint):DisplayObject
 		{
 			var bm:Bitmap = $obj as Bitmap;
 			if(bm)
@@ -113,10 +113,49 @@ package com.minarto.display
 			
 			bitmapDatas.splice($index, 0, item);
 			
-			return	item;
+			return	$obj;
 		}
 		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function remove($obj:DisplayObject):DisplayObject
+		{
+			var i:int = - 1;
+			var length:uint = numChildren;
+			var item:BitmapItem;
+			while(++ i < length)
+			{
+				item = bitmapDatas[i];
+				if(item.sourceObject == $obj)
+				{
+					bitmapDatas.splice(i, 1);
+					break;
+				}
+			}			
+			
+			return	$obj;
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function removeAt($index:uint):DisplayObject
+		{
+			var item:BitmapItem = bitmapDatas[$index];
+			bitmapDatas.splice($index, 1);
+			
+			return	item.sourceObject;
+		}
+		
+		
 		private var count:int;
+		
+		
 		/**
 		 * 
 		 * 
@@ -155,8 +194,6 @@ package com.minarto.display
 			blendJob.bottomBitmapData = bitmapData;
 			blendJob.topBitmapData = topBitmapData;
 			blendJob.start(true);
-			
-			
 		}
 		
 		
