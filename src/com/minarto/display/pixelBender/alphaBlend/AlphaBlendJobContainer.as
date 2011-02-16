@@ -61,8 +61,7 @@ package com.minarto.display.pixelBender.alphaBlend
 		 */		
 		public function getObject():DisplayObject
 		{
-			var color:uint = __eventBitmapData.getPixel(mouseX, mouseY);
-			
+			var color:uint = __eventBitmapData.getPixel32(mouseX, mouseY);
 			var item:BitmapItem;
 			var i:int = - 1;
 			var length:uint = numChildren;
@@ -88,7 +87,6 @@ package com.minarto.display.pixelBender.alphaBlend
 			item.depthColor = ++ depthColor;
 			cBlendJob.color = depthColor;
 			cBlendJob.start(true);
-			trace(depthColor, bd.getPixel32(100, 100))
 			item.eventBitmapData = bd;
 			
 			return	$obj;
@@ -159,7 +157,13 @@ package com.minarto.display.pixelBender.alphaBlend
 			desPoint.x = item.x;
 			desPoint.y = item.y;
 			
-			__eventBitmapData.copyPixels(bd, sourceRect, desPoint);
+			var sBitmapData:BitmapData = new BitmapData(width, height, true, 0x00000000);
+			sBitmapData.copyPixels(bd, sourceRect, desPoint);
+			
+			aBlendJob = new AlphaBlendJob(__eventBitmapData, width, height);
+			aBlendJob.bottomBitmapData = __eventBitmapData;
+			aBlendJob.topBitmapData = sBitmapData;
+			aBlendJob.start(true);
 		}
 		
 		

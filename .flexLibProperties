@@ -217,6 +217,7 @@
     <classEntry path="com.minarto.display.bitmap.ColorPattern"/>
     <classEntry path="com.minarto.display.graphics.DrawArcCircle"/>
     <classEntry path="com.minarto.display.graphics.DrawArcEllipse"/>
+    <classEntry path="com.minarto.display.graphics.DrawSpLine"/>
     <classEntry path="com.minarto.display.graphics.DrawingBase"/>
     <classEntry path="com.minarto.display.graphics.IDrawing"/>
     <classEntry path="com.minarto.display.image.JPEGEncoder"/>
@@ -225,6 +226,10 @@
     <classEntry path="com.minarto.display.loader.ImageGalleryLoader"/>
     <classEntry path="com.minarto.display.pixelBender.alphaBlend.AlphaBlendFilter"/>
     <classEntry path="com.minarto.display.pixelBender.alphaBlend.AlphaBlendJob"/>
+    <classEntry path="com.minarto.display.pixelBender.alphaBlend.AlphaBlendJobContainer"/>
+    <classEntry path="com.minarto.display.pixelBender.alphaBlend.AlphaBlendJobContainerBase"/>
+    <classEntry path="com.minarto.display.pixelBender.alphaBlend.BitmapItem"/>
+    <classEntry path="com.minarto.display.pixelBender.colorConvert.ConvertColorJob"/>
     <classEntry path="com.minarto.events.APPEventType"/>
     <classEntry path="com.minarto.events.CGestureEvent"/>
     <classEntry path="com.minarto.events.CPressAndTapGestureEvent"/>
@@ -269,15 +274,13 @@
     <classEntry path="com.minarto.web.MultiTabBrowserManagerBase"/>
     <classEntry path="com.minarto.web.WebBrowserBase"/>
     <classEntry path="com.minarto.web.WebBrowserEventType"/>
-    <classEntry path="com.minarto.display.graphics.DrawSpLine"/>
-    <classEntry path="com.minarto.display.pixelBender.alphaBlend.AlphaBlendJobContainer"/>
-    <classEntry path="com.minarto.display.pixelBender.colorConvert.ConvertColorJob"/>
-    <classEntry path="com.minarto.display.pixelBender.alphaBlend.BitmapItem"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj" sourcePath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj"/>
     <resourceEntry destPath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbk" sourcePath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbk"/>
     <resourceEntry destPath="com/coderanger/USAGE.txt" sourcePath="com/coderanger/USAGE.txt"/>
+    <resourceEntry destPath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbj" sourcePath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbj"/>
+    <resourceEntry destPath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk" sourcePath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk"/>
   </includeResources>
   <namespaceManifests/>
 </flexLibProperties>

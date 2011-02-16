@@ -53,11 +53,13 @@ package com.minarto.display.pixelBender.colorConvert
 		 */		
 		public function set color($color:uint):void
 		{
-			var a:uint = $color >> 24 & 0xFF;
-			var r:uint = $color >> 16 & 0xFF;
-			var g:uint = $color >> 8 & 0xFF;
-			var b:uint = $color & 0xFF;
-			__shader.data.color.input = [r, g, b, a];
+			var v:Number = 1 / 0xFF;
+			var a:Number = ($color >> 24 & 0xFF) * v;
+			var r:Number = ($color >> 16 & 0xFF) * v;
+			var g:Number = ($color >> 8 & 0xFF) * v;
+			var b:Number = ($color & 0xFF) * v;
+
+			__shader.data.color.value = [r, g, b, a];
 		}
 	}
 }
