@@ -171,9 +171,6 @@ package com.minarto.display.pixelBender.alphaBlend
 		{
 			super.hnResize($e);
 			__eventBitmapData = new BitmapData(width, height, false, 0xFFFFFFFF);
-			var bm:Bitmap = new Bitmap(__eventBitmapData);
-			bm.y = height;
-			addChild(bm);
 		}
 	}
 }
