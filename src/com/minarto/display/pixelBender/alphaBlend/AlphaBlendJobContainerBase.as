@@ -1,12 +1,15 @@
-package com.minarto.display
+package com.minarto.display.pixelBender.alphaBlend
 {
 	
-	import com.minarto.display.pixelBender.alphaBlend.AlphaBlendJob;
+	import com.minarto.display.CustomSizeSprite;
+	import com.minarto.display.pixelBender.colorConvert.ConvertColorJob;
+	import com.minarto.events.CustomEvent;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.ShaderEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -17,18 +20,19 @@ package com.minarto.display
 	 * @author Minarto
 	 * 
 	 */	
-	public class AlphaBlendJobContainer extends CustomSizeSprite
+	public class AlphaBlendJobContainerBase extends CustomSizeSprite
 	{
 		/**
 		 * 
 		 */		
-		public var bitmapDatas:Vector.<BitmapItem> = Vector.<BitmapItem>([]);
+		protected var bitmapDatas:Vector.<BitmapItem> = Vector.<BitmapItem>([]);
 		protected var bitmap:Bitmap;
 		protected var bitmapData:BitmapData;
 		protected var topBitmapData:BitmapData;
 		protected var sourceRect:Rectangle;
 		protected var desPoint:Point;
-		protected var blendJob:AlphaBlendJob;
+		
+		protected var aBlendJob:AlphaBlendJob;
 		
 		
 		override public function get numChildren():int
@@ -41,16 +45,16 @@ package com.minarto.display
 		 * 
 		 * 
 		 */		
-		public function AlphaBlendJobContainer()
+		public function AlphaBlendJobContainerBase()
 		{
+			sourceRect = new Rectangle(0, 0, 0, 0);
+			desPoint = new Point(0, 0);
 			super();
 		}
 		
 		
 		override public function init():void
 		{
-			sourceRect = new Rectangle(0, 0, 0, 0);
-			desPoint = new Point(0, 0);
 			addEventListener(Event.RESIZE, hnResize);
 			
 			bitmapDatas.length = 0;
@@ -64,8 +68,17 @@ package com.minarto.display
 		override public function destroy():void
 		{
 			removeEventListener(Event.RESIZE, hnResize);
-			
-			blendJob.removeEventListener(ShaderEvent.COMPLETE, hnShaderComplete);
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function clear():void
+		{
+			bitmapDatas.length = 0;
+			bitmapData.dispose();
 		}
 		
 		
@@ -85,9 +98,7 @@ package com.minarto.display
 				bd = new BitmapData($obj.width, $obj.height, true, 0x00000000);
 				bd.draw($obj as DisplayObject);
 			}
-			var item:BitmapItem = new BitmapItem($obj.x, $obj.y, bd, $obj);
-			
-			bitmapDatas.push(item);
+			bitmapDatas.push(new BitmapItem($obj.x, $obj.y, bd, $obj));
 			
 			return	$obj;
 		}
@@ -97,7 +108,7 @@ package com.minarto.display
 		 * 
 		 * 
 		 */		
-		public function addAt($obj:DisplayObject, $index:uint):DisplayObject
+		public function addAt($obj:DisplayObject, $index:int):DisplayObject
 		{
 			var bm:Bitmap = $obj as Bitmap;
 			if(bm)
@@ -109,11 +120,57 @@ package com.minarto.display
 				bd = new BitmapData($obj.width, $obj.height, true, 0x00000000);
 				bd.draw($obj as DisplayObject);
 			}
-			var item:BitmapItem = new BitmapItem($obj.x, $obj.y, bd, $obj);
-			
-			bitmapDatas.splice($index, 0, item);
+			bitmapDatas.splice($index, 0, new BitmapItem($obj.x, $obj.y, bd, $obj));
 			
 			return	$obj;
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function getAt($index:int):DisplayObject
+		{
+			return	bitmapDatas[$index].sourceObject;
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function getIndex($obj:DisplayObject):int
+		{
+			var i:int = - 1;
+			var length:uint = numChildren;
+			var item:BitmapItem;
+			while(++ i < length)
+			{
+				item = bitmapDatas[i];
+				if(item.sourceObject == $obj)	break;
+			}	
+			
+			return	i;
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function getName($name:String):DisplayObject
+		{
+			var i:int = - 1;
+			var length:uint = numChildren;
+			var item:BitmapItem;
+			while(++ i < length)
+			{
+				item = bitmapDatas[i];
+				if(item.sourceObject.name == $name)	break;
+			}
+			
+			return	i < length ? item.sourceObject : null;
 		}
 		
 		
@@ -153,21 +210,18 @@ package com.minarto.display
 		}
 		
 		
-		private var count:int;
-		
-		
 		/**
 		 * 
 		 * 
 		 */		
 		public function draw():void
 		{
-			count = - 1;
+			var i:int = - 1;
 			var length:uint = numChildren;
 			var bd:BitmapData;
-			while(++ count < length)
+			while(++ i < length)
 			{
-				drawIndex(count);
+				drawIndex(i);
 			}
 		}
 		
@@ -177,7 +231,7 @@ package com.minarto.display
 		 * @param $e
 		 * 
 		 */		
-		private function drawIndex($index:uint):void
+		protected function drawIndex($index:uint):void
 		{
 			var item:BitmapItem = bitmapDatas[$index];
 			
@@ -190,10 +244,10 @@ package com.minarto.display
 			topBitmapData = new BitmapData(width, height, true, 0x00000000);
 			topBitmapData.copyPixels(bd, sourceRect, desPoint);
 			
-			blendJob = new AlphaBlendJob(bitmapData, width, height);
-			blendJob.bottomBitmapData = bitmapData;
-			blendJob.topBitmapData = topBitmapData;
-			blendJob.start(true);
+			aBlendJob = new AlphaBlendJob(bitmapData, width, height);
+			aBlendJob.bottomBitmapData = bitmapData;
+			aBlendJob.topBitmapData = topBitmapData;
+			aBlendJob.start(true);
 		}
 		
 		
@@ -202,21 +256,13 @@ package com.minarto.display
 		 * @param $e
 		 * 
 		 */		
-		private function hnShaderComplete($e:ShaderEvent):void
+		protected function hnResize($e:Event):void
 		{
-			
-			
-		}
-		
-		
-		/**
-		 * 
-		 * @param $e
-		 * 
-		 */		
-		private function hnResize($e:Event):void
-		{
-			var bd:BitmapData = bitmapData;
+			if(bitmapData)
+			{
+				var bd:BitmapData = bitmapData.clone();
+				bitmapData.dispose();
+			}
 			bitmapData = new BitmapData(width, height, true, 0x00000000);
 			if(bd)
 			{
@@ -229,37 +275,8 @@ package com.minarto.display
 			}
 			bitmap.bitmapData = bitmapData;
 			
-			topBitmapData = new BitmapData(width, height, true, 0x00000000);
+			if(topBitmapData)	topBitmapData.dispose();
+			topBitmapData = bitmapData.clone();
 		}
-	}
-}
-
-
-
-import flash.display.BitmapData;
-import flash.display.DisplayObject;
-
-final class BitmapItem
-{
-	public var x:Number;
-	public var y:Number;
-	public var bitmapData:BitmapData;
-	public var sourceObject:DisplayObject;
-	
-	
-	/**
-	 * 
-	 * @param $width
-	 * @param $height
-	 * @param $transparent
-	 * @param $fillColor
-	 * 
-	 */	
-	public function BitmapItem($x:Number, $y:Number, $bitmapData:BitmapData, $sourceObject:DisplayObject=null)
-	{
-		x = $x;
-		y = $y;
-		bitmapData = $bitmapData;
-		sourceObject = $sourceObject;
 	}
 }

@@ -1,0 +1,34 @@
+<languageVersion : 1.0;>
+
+kernel NewFilter
+<   namespace : "minarto";
+    vendor : "Your Vendor";
+    version : 1;
+    description : "your description";
+>
+{
+    input image4 src;
+    output pixel4 dst;
+    
+    parameter pixel4 color
+    <
+        defaultValue : pixel4(0.0, 0.0, 0.0, 0.0);
+    >;
+    
+    
+
+    void
+    evaluatePixel()
+    {
+        pixel4 p = sampleNearest(src, outCoord());
+           
+        p.r = color.r;
+        p.g = color.g;
+        p.b = color.b;
+        if ( p.a > 0.0 )
+        {
+            p.a = 1.0;
+        }
+        dst = p;
+    }
+}
