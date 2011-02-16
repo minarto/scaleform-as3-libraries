@@ -16,7 +16,7 @@ package com.minarto.display.pixelBender.alphaBlend
 		public var bitmapData:BitmapData;
 		public var eventBitmapData:BitmapData;
 		public var sourceObject:DisplayObject;
-		public var depthColor:uint;
+		public var uniqueColor:uint;
 		
 		
 		/**

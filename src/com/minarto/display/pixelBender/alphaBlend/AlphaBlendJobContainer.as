@@ -32,7 +32,7 @@ package com.minarto.display.pixelBender.alphaBlend
 		 * 
 		 */		
 		private var cBlendJob:ConvertColorJob;
-		private var depthColor:uint = 0xFF000000;
+		private var uniqueColor:uint = 0xFF000000;
 		
 		
 		/**
@@ -49,7 +49,7 @@ package com.minarto.display.pixelBender.alphaBlend
 		
 		override public function clear():void
 		{
-			depthColor = 0xFF000000;
+			uniqueColor = 0xFF000000;
 			__eventBitmapData.dispose();
 		}
 		
@@ -68,7 +68,7 @@ package com.minarto.display.pixelBender.alphaBlend
 			while(++ i < length)
 			{
 				item = bitmapDatas[i];
-				if(item.depthColor == color)	break;
+				if(item.uniqueColor == color)	break;
 			}
 			
 			return	(i < length) ? item.sourceObject : null;
@@ -84,8 +84,8 @@ package com.minarto.display.pixelBender.alphaBlend
 			var bd:BitmapData = item.bitmapData.clone();
 			cBlendJob = new ConvertColorJob(bd, bd.width, bd.height);
 			cBlendJob.sourceBitmapData = item.bitmapData;
-			item.depthColor = ++ depthColor;
-			cBlendJob.color = depthColor;
+			item.uniqueColor = ++ uniqueColor;
+			cBlendJob.color = uniqueColor;
 			cBlendJob.start(true);
 			item.eventBitmapData = bd;
 			
@@ -102,8 +102,8 @@ package com.minarto.display.pixelBender.alphaBlend
 			var bd:BitmapData = item.bitmapData.clone();
 			cBlendJob = new ConvertColorJob(bd, bd.width, bd.height);
 			cBlendJob.sourceBitmapData = item.bitmapData;
-			item.depthColor = ++ depthColor;
-			cBlendJob.color = depthColor;
+			item.uniqueColor = ++ uniqueColor;
+			cBlendJob.color = uniqueColor;
 			cBlendJob.start(true);
 			item.eventBitmapData = bd;
 			
