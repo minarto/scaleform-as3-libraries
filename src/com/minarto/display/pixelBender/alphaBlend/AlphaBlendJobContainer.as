@@ -170,7 +170,8 @@ package com.minarto.display.pixelBender.alphaBlend
 		override protected function hnResize($e:Event):void
 		{
 			super.hnResize($e);
-			__eventBitmapData = new BitmapData(width, height, false, 0xFFFFFFFF);
+			uniqueColor = 0xFF000000;
+			__eventBitmapData = new BitmapData(width, height, false, 0x00000000);
 		}
 	}
 }
