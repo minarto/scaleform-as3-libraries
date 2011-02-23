@@ -47,6 +47,7 @@ package com.minarto.display.bitmap
 			var cb:int;
 			
 			var absF:Function = Math.abs;
+			var maxF:Function = Math.max;
 			var value:uint;
 			
 			var colors:Vector.<uint> = new Vector.<uint>(cLength, true);
@@ -94,7 +95,7 @@ package com.minarto.display.bitmap
 							cg = absF(cg - gg);
 							cb = absF(cb - gb);
 							
-							value = ca + cr + cg + cb >> 2;
+							value = maxF(ca, cr, cg, cb);
 							values[k] = {index:k, value:value};
 							
 							++ k;

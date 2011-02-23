@@ -82,6 +82,14 @@
     <classEntry path="com.adobe.webapis.ServiceBase"/>
     <classEntry path="com.adobe.webapis.URLLoaderBase"/>
     <classEntry path="com.adobe.webapis.events.ServiceEvent"/>
+    <classEntry path="org.iotashan.oauth.IOAuthSignatureMethod"/>
+    <classEntry path="org.iotashan.oauth.OAuthConsumer"/>
+    <classEntry path="org.iotashan.oauth.OAuthRequest"/>
+    <classEntry path="org.iotashan.oauth.OAuthSignatureMethod_HMAC_SHA1"/>
+    <classEntry path="org.iotashan.oauth.OAuthSignatureMethod_PLAINTEXT"/>
+    <classEntry path="org.iotashan.oauth.OAuthToken"/>
+    <classEntry path="org.iotashan.utils.OAuthUtil"/>
+    <classEntry path="org.iotashan.utils.URLEncoding"/>
     <classEntry path="caurina.transitions.AuxFunctions"/>
     <classEntry path="caurina.transitions.Equations"/>
     <classEntry path="caurina.transitions.PropertyInfoObj"/>
@@ -187,12 +195,6 @@
     <classEntry path="com.dborisenko.api.vo.FaultObject"/>
     <classEntry path="com.dborisenko.api.vo.ValueObject"/>
     <classEntry path="com.dborisenko.utils.URLUtil"/>
-    <classEntry path="org.iotashan.oauth.IOAuthSignatureMethod"/>
-    <classEntry path="org.iotashan.oauth.OAuthConsumer"/>
-    <classEntry path="org.iotashan.oauth.OAuthRequest"/>
-    <classEntry path="org.iotashan.oauth.OAuthSignatureMethod_HMAC_SHA1"/>
-    <classEntry path="org.iotashan.oauth.OAuthSignatureMethod_PLAINTEXT"/>
-    <classEntry path="org.iotashan.oauth.OAuthToken"/>
     <classEntry path="com.minarto.IDefaultInterface"/>
     <classEntry path="com.minarto.airApp.admin.AdminFileReader"/>
     <classEntry path="com.minarto.airApp.display.AppContainer"/>
@@ -274,13 +276,14 @@
     <classEntry path="com.minarto.web.MultiTabBrowserManagerBase"/>
     <classEntry path="com.minarto.web.WebBrowserBase"/>
     <classEntry path="com.minarto.web.WebBrowserEventType"/>
+    <classEntry path="com.minarto.openApi.nate.oauth.NateOauth"/>
   </includeClasses>
   <includeResources>
+    <resourceEntry destPath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk" sourcePath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk"/>
     <resourceEntry destPath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj" sourcePath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbj"/>
+    <resourceEntry destPath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbj" sourcePath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbj"/>
     <resourceEntry destPath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbk" sourcePath="com/minarto/display/pixelBender/alphaBlend/alphaBlend.pbk"/>
     <resourceEntry destPath="com/coderanger/USAGE.txt" sourcePath="com/coderanger/USAGE.txt"/>
-    <resourceEntry destPath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbj" sourcePath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbj"/>
-    <resourceEntry destPath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk" sourcePath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk"/>
   </includeResources>
   <namespaceManifests/>
 </flexLibProperties>

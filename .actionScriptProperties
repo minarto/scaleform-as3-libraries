@@ -6,6 +6,7 @@
       <compilerSourcePathEntry kind="1" linkType="1" path="libs/svnLibs/as3corelib"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="libs/svnLibs/tweener"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="libs/svnLibs/twitter"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="libs/svnLibs/oauth/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
