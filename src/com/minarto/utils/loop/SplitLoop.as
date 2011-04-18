@@ -1,9 +1,10 @@
 package com.minarto.utils.loop
 {
+	import com.minarto.events.CustomEvent;
+	
+	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.events.Event;
-	
-	import com.minarto.events.CustomEvent;
 	
 	
 	/**
@@ -72,6 +73,29 @@ package com.minarto.utils.loop
 		 * 
 		 */		
 		public function loop($limit:uint, $function:Function, ...$args):void
+		{
+			var item:FunctionItem = new FunctionItem();
+			item.functionName = $function;
+			item.arguements = $args;
+			item.limit = $limit;
+			
+			functions.fixed = false;
+			functions.push(item);
+			functions.fixed = true;
+			
+			functionLength = functions.length;
+			
+			if(!hasEventListener(Event.ENTER_FRAME))	addEventListener(Event.ENTER_FRAME, hnEnterFrame);
+		}
+		
+		
+		/**
+		 * 
+		 * @param $function
+		 * @param $args
+		 * 
+		 */		
+		public function bitmapLoop($limit:uint, $bitmapData:BitmapData, $function:Function, ...$args):void
 		{
 			var item:FunctionItem = new FunctionItem();
 			item.functionName = $function;

@@ -1,0 +1,41 @@
+<languageVersion : 1.0;>
+
+kernel NewFilter
+<   namespace : "minarto";
+    vendor : "Your Vendor";
+    version : 1;
+    description : "your description";
+>
+{
+    input image1 colorList;
+    input image4 src;
+    output image1 dst;
+
+    void
+    evaluatePixel()
+    {
+        pixel4 c = sampleNearest(src, outCoord());
+        
+        int cl = pixelSize(colorList);
+        for( int i = 0; i<cl, ++i)
+        {
+            float4 = colorList.x
+            c.r = cr - 
+        }
+        p.r = color.r;
+        p.g = color.g;
+        p.b = color.b;
+        if ( p.a > 0.0 )
+        {
+            p.a = 1.0;
+        }
+        dst = p;
+    }
+
+    pixel4
+    evaluatePixel2()
+    {
+        pixel4 p = sampleNearest(image1, outCoord());
+        return p;
+    }
+}

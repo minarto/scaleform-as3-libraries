@@ -1,5 +1,7 @@
 package com.minarto.display.bitmap
 {
+	import com.minarto.utils.loop.SplitLoop;
+	
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 
@@ -74,6 +76,107 @@ package com.minarto.display.bitmap
 					{
 						gc = $bitmapData.getPixel(x, y);
 	
+						ga = gc >> 24 & 0xFF;
+						gr = gc >> 16 & 0xFF;
+						gg = gc >> 8 & 0xFF;
+						gb = gc & 0xFF;
+						
+						values = [];
+						k = 0;
+						while(k < cLength)
+						{
+							cc = $colorList[k];
+							
+							ca = cc >> 24 & 0xFF;
+							cr = cc >> 16 & 0xFF;
+							cg = cc >> 8 & 0xFF;
+							cb = cc & 0xFF;
+							
+							ca = absF(ca - ga);
+							cr = absF(cr - gr);
+							cg = absF(cg - gg);
+							cb = absF(cb - gb);
+							
+							value = maxF(ca, cr, cg, cb);
+							values[k] = {index:k, value:value};
+							
+							++ k;
+						}
+						
+						values.sortOn("value", sortType);
+						
+						colors[values[0].index] ++;
+					}					
+					
+					
+					++ i;
+					
+					++ y;
+				}
+				-- x;
+			}
+			
+			return	colors;
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		public function getNearColorsForSplit($bitmapData:BitmapData, $colorList:Vector.<uint>, $ruleOutRects:Vector.<Rectangle>=null):Vector.<uint>
+		{
+			var cLength:uint = $colorList.length;
+			var rLength:uint = $ruleOutRects ? $ruleOutRects.length : 0;
+			
+			var x:int = $bitmapData.width - 1;
+			var h:int = $bitmapData.height;
+			var y:int;
+			var rect:Rectangle;
+			
+			var gc:uint;
+			var ga:uint;
+			var gr:uint;
+			var gg:uint;
+			var gb:uint;
+			
+			var cc:uint;
+			var ca:int;
+			var cr:int;
+			var cg:int;
+			var cb:int;
+			
+			var absF:Function = Math.abs;
+			var maxF:Function = Math.max;
+			var value:uint;
+			
+			var colors:Vector.<uint> = new Vector.<uint>(cLength, true);
+			var i:uint;
+			var values:Array;
+			var sortType:uint = Array.NUMERIC;
+			
+			var sLoop:SplitLoop = new SplitLoop();
+			//sLoop.loop($bitmapData.width, 
+			
+			var k:uint;
+			while(x > - 1)
+			{
+				y = 0;
+				while(y < h)
+				{
+					k = 0;
+					while(k < rLength)
+					{
+						rect = $ruleOutRects[k];
+						if(x >= rect.x && x < rect.x + rect.width && y >= rect.y && y < rect.y + rect.height)	break;
+						
+						++ k;
+					}
+					
+					if(k == rLength)
+					{
+						gc = $bitmapData.getPixel(x, y);
+						
 						ga = gc >> 24 & 0xFF;
 						gr = gc >> 16 & 0xFF;
 						gg = gc >> 8 & 0xFF;
