@@ -35,10 +35,8 @@ package com.minarto.display.graphics
 			var angle:Number = Math.abs($angle);
 			if(angle >= 360)	$angle = $angle < 0 ? - 360 : 360;
 			
-			var commands:Vector.<int> = graphicsPath.commands;
-			var commandsPush:Function = commands.push;
-			var data:Vector.<Number> = graphicsPath.data;
-			var dataPush:Function = data.push;
+			var commandsPush:Function = graphicsPath.commands.push;
+			var dataPush:Function = graphicsPath.data.push;
 			
 			var cosF:Function = Math.cos;
 			var sinF:Function = Math.sin;
