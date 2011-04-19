@@ -48,8 +48,8 @@ package com.minarto.display.graphics
 			var x:Number = cosF(radian) * $radius;
 			var y:Number = sinF(radian) * $yradius;
 			
-			commands.push(2);
-			data.push($x + x, $y + y);
+			commandsPush(2);
+			dataPush($x + x, $y + y);
 			
 			var length:uint = Math.ceil(Math.abs(Math2.decimalCal($angle, "/", 45)));
 			var i:int = - length - 1;
