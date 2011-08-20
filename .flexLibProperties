@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="true" version="3">
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="be.nascom.flash.graphics.Rippler"/>
     <classEntry path="com.codeazur.fzip.FZip"/>
@@ -277,6 +277,7 @@
     <classEntry path="com.minarto.web.WebBrowserBase"/>
     <classEntry path="com.minarto.web.WebBrowserEventType"/>
     <classEntry path="com.minarto.openApi.nate.oauth.NateOauth"/>
+    <classEntry path="com.minarto.scaleform4.core.CUIComponent"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk" sourcePath="com/minarto/display/pixelBender/colorConvert/ConvertColor.pbk"/>
