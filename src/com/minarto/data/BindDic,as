@@ -31,24 +31,22 @@ package com.minarto.data
 		/**
 		 * 값 설정
 		 */	
-		static public function set($uid:*, $key:String, ...$values):void
+		static public function set($uid:*, $key:String, $values:*):void
 		{
 			var b:Bind = BindDic.get($uid);
 			
-			$values.unshift($key);
-			b.set.apply(b, $values);
+			b.set.apply(b, arguments.slice(1));
 		}
 		
 		
 		/**
 		 * 이벤트 발생
 		 */	
-		static public function evt($uid:*, $key:String, ...$values):void
+		static public function evt($uid:*, $key:String, $values:*):void
 		{
 			var b:Bind = BindDic.get($uid);
 			
-			$values.unshift($key);
-			b.evt.apply(b, $values);
+			b.evt.apply(b, arguments.slice(1));
 		}
 	}
 }
