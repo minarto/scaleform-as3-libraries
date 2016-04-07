@@ -7,6 +7,8 @@ package com.minarto.utils.math
 	 */	
 	public final class Math2
 	{
+		static public const RADIAN:Number = Math.PI / 180;
+		
 		/**
 		 * 
 		 * @param $num0
