@@ -29,22 +29,6 @@ package com.minarto.data
 		
 		
 		/**
-		 * 값 설정 
-		 * @param $key	바인딩 키
-		 * @param $values	바인딩 값
-		 */
-		protected function _set($key:String, $values:Array):void 
-		{
-			var dic:Dictionary = _handlerDic[$key], fn:*;
-			
-			for (fn in dic)
-			{
-				fn.apply(null, $values.concat(dic[fn]));
-			}
-		}
-		
-		
-		/**
 		 * 이벤트 발생
 		 * @param $key	이벤트 키
 		 * @param $values	이벤트 값
@@ -55,12 +39,14 @@ package com.minarto.data
 			
 			for (fn in dic)
 			{
-				_set($key, $values);
-				return;
+				fn.apply(null, $values.concat(dic[fn]));
 			}
 			
-			a = reservations[$key] || (reservations[$key] = []);
-			a.push($values);
+			if (!fn)
+			{
+				a = reservations[$key] || (reservations[$key] = []);
+				a.push($values);
+			}			
 		}
 		
 		
@@ -87,20 +73,18 @@ package com.minarto.data
 		 */				
 		public function addPlay($key:String, $handler:Function, ...$args):void 
 		{
-			var a:Array = reservations[$key], l:uint = a ? a.length : 0, i:uint, values:Array = $args.concat();
+			var a:Array = reservations[$key], l:int = a ? a.length - 1 : 0, i:uint, values:Array = $args.concat();
 		
 			values.unshift($key, $handler);
 			add.apply(this, values);
 			
-			if (l)
+			for (; i < l; ++i)
 			{
-				for (; i < l; ++i)
-				{
-					values = a[i];
-					$handler.apply(null, values.concat($args));
-				}
+				values = a[i];
+				$handler.apply(null, values.concat($args));
 			}
-			else if (values = _valueDic[$key])
+
+			if (values = _valueDic[$key])
 			{
 				$handler.apply(null, values.concat($args));
 			}
@@ -115,36 +99,22 @@ package com.minarto.data
 		 */			
 		public function del($key:String=null, $handler:Function=null):void 
 		{
-			var dic:Dictionary, fn:*;
+			var key:String, dic:Dictionary, fn:*;
 			
-			if($key)
+			for (key in _handlerDic)
 			{
-				if($handler)
+				if (($key == key) || (!$key))
 				{
-					if(dic = _handlerDic[$key])
+					dic = _handlerDic[key];
+					for(fn in dic)
 					{
-						delete	dic[$handler];
-						
-						$handler = null;
-						for(fn in dic)
+						if(($handler == fn) || (!$handler))
 						{
-							$handler = fn;
-							break;
+							delete	dic[fn];
 						}
-						if(!$handler)	delete	_handlerDic[$key];
 					}
-				}
-				else	delete	_handlerDic[$key];
+				}				
 			}
-			else if($handler)
-			{
-				for($key in _handlerDic)
-				{
-					dic = _handlerDic[$key];
-					delete	dic[$handler];
-				}
-			}
-			else	_handlerDic = {};
 		}
 		
 		
