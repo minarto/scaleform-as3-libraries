@@ -19,33 +19,32 @@ package com.minarto.data
 		 * @param $key	바인딩 키
 		 * @param $value	바인딩 값
 		 */
-		public function set($key:String, ...$values):void
+		public function set($key:String, $value:*):void
 		{
 			_valueDic[$key] = $values;
 			
-			$values.unshift($key);
-			evt.apply(this, $values);
+			evt.apply(this, arguments);
 		}
 		
 		
 		/**
 		 * 이벤트 발생
 		 * @param $key	이벤트 키
-		 * @param $values	이벤트 값
+		 * @param $value	이벤트 값
 		 */
-		public function evt($key:String, ...$values):void 
+		public function evt($key:String, $value:*):void
 		{
-			var dic:Dictionary = _handlerDic[$key], fn:*, a:Array;
+			var values:Array = arguments.slice(1), dic:Dictionary = _handlerDic[$key], fn:*, a:Array;
 			
 			for (fn in dic)
 			{
-				fn.apply(null, $values.concat(dic[fn]));
+				fn.apply(null, values.concat(dic[fn]));
 			}
 			
 			if (!fn)
 			{
 				a = reservations[$key] || (reservations[$key] = []);
-				a.push($values);
+				a.push(values);
 			}			
 		}
 		
@@ -55,11 +54,11 @@ package com.minarto.data
 		 * @param $key		바인딩 키
 		 * @param $handler	바인딩 핸들러
 		 */				
-		public function add($key:String, $handler:Function, ...$args):void 
+		public function add($key:String, $handler:Function):void 
 		{
 			var dic:Dictionary = _handlerDic[$key] || (_handlerDic[$key] = new Dictionary(true));
 			
-			dic[$handler] = $args;
+			dic[$handler] = arguments.slice(2);
 			
 			delete	reservations[$key];
 		}
@@ -69,24 +68,22 @@ package com.minarto.data
 		 * 바인딩 
 		 * @param $key		바인딩 키
 		 * @param $handler	바인딩 핸들러
-		 * @param $args		바인딩 추가 인자
 		 */				
-		public function addPlay($key:String, $handler:Function, ...$args):void 
+		public function addPlay($key:String, $handler:Function):void 
 		{
-			var a:Array = reservations[$key], l:int = a ? a.length - 1 : 0, i:uint, values:Array = $args.concat();
+			var a:Array = reservations[$key], l:int = a ? a.length - 1 : 0, i:uint, args:Array = arguments.slice(2), values:Array;
 		
-			values.unshift($key, $handler);
-			add.apply(this, values);
+			add.apply(this, arguments);
 			
 			for (; i < l; ++i)
 			{
 				values = a[i];
-				$handler.apply(null, values.concat($args));
+				$handler.apply(null, values.concat(args));
 			}
 
 			if (values = _valueDic[$key])
 			{
-				$handler.apply(null, values.concat($args));
+				$handler.apply(null, values.concat(args));
 			}
 		}
 		
