@@ -9,7 +9,7 @@ package com.minarto.motion
 	{
         public function TweenX(duration:Number, target:Object = null, props:Object = null, quickSet:Object = null)
 		{
-			var name:String, tmp;
+			var name:String, tmp:*;
 			
 			if (quickSet && quickSet.fromTo)
 			{
