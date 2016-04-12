@@ -1,17 +1,12 @@
-package com.minarto.media.video
+package com.minarto.video
 {
 	import flash.events.*;
-	import flash.media.SoundTransform;
-	import flash.media.Video;
+	import flash.media.*;
 	import flash.net.*;
-	
-	import com.minarto.IDefaultInterface;
-	import com.minarto.events.VideoEventType;
-	
 
 	/**
 	 */
-	public class VideoPlayerBase extends Video implements IDefaultInterface
+	public class VideoPlayerBase extends Video
 	{
 		/**
 		 * 
@@ -24,33 +19,24 @@ package com.minarto.media.video
 		
 		
 		/**
-		 * 영상 소스
-		 */		
-		private var __source:String;
-		public function set source($v:String):void
-		{
-			__source = $v;
-			dispatchEvent(new Event(VideoEventType.SOURCE_CHANGE));
-		}
-		public function get source():String
-		{
-			return	__source;
-		}
-		
-		
-		/**
 		 * 
 		 */		
-		private var __volume:Number = 1;
-		public function set volume($v:Number):void
+		protected var __volume:Number = 1;
+		
+		public function setVolume($v:Number):void
 		{
-			if($v == volume)	return;
+			var soundTransform:SoundTransform;
+			
+			if ($v == volume)
+			{
+				return;
+			}
 			__volume = $v;
-			var soundTransform:SoundTransform = __stream.soundTransform || new SoundTransform();
-			soundTransform.volume = __volume;
+			soundTransform = __stream.soundTransform || new SoundTransform;
+			soundTransform.volume = $v;
 			__stream.soundTransform = soundTransform;
 		}
-		public function get volume():Number
+		public function getVolume():Number
 		{
 			return	__volume;
 		}
@@ -75,7 +61,7 @@ package com.minarto.media.video
 		 */		
 		public function init():void
 		{
-			__connection = new NetConnection();
+			__connection = new NetConnection;
 			__connection.connect(null);
 			__connection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 			
@@ -83,8 +69,6 @@ package com.minarto.media.video
 			__stream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 			__stream.client = this;
 			attachNetStream(__stream);
-			
-			addEventListener(VideoEventType.SOURCE_CHANGE, hnSourceChange);
 		}
 		
 		
@@ -97,7 +81,6 @@ package com.minarto.media.video
 			
 			__connection.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 			__stream.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-			removeEventListener(VideoEventType.SOURCE_CHANGE, hnSourceChange);
 			
 			__connection = null;
 			
@@ -120,15 +103,22 @@ package com.minarto.media.video
 		}
 		
 		
+		protected var _src:String;
 		/**
 		 * 
 		 */
-		protected function hnSourceChange($e:Event):void
+		public function setSource($src:String):void
 		{
-			__stream.play(__source, 0);
-			var soundTransform:SoundTransform = __stream.soundTransform || new SoundTransform();
+			var soundTransform:SoundTransform = __stream.soundTransform || new SoundTransform;
+			
+			__stream.play($src, 0);
+			
 			soundTransform.volume = __volume;
 			__stream.soundTransform = soundTransform;
+		}
+		public function getSource():String
+		{
+			return	_src;
 		}
 		
 		
@@ -137,21 +127,24 @@ package com.minarto.media.video
 		 */
 		private function netStatusHandler($e:NetStatusEvent):void
 		{
-			if(__connection == $e.target)	__connection.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-
 			var code:String = $e.info.code;
-			//trace("code", code)
+			
+			if (__connection == $e.target)
+			{
+				__connection.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+			}
+
 			switch (code)
 			{
-				case "NetStream.Play.StreamNotFound":
-					dispatchEvent(new Event(VideoEventType.NOT_SUPPORTED_VIDEO));
-					break;
 				case "NetStream.Play.Stop":
-					if(Math.abs(duration - __stream.time) < 1)	dispatchEvent(new Event(VideoEventType.PLAY_COMPLETE));
+					if (Math.abs(duration - __stream.time) < 1)
+					{
+						dispatchEvent(new Event(Event.COMPLETE));
+					}
 					break;
-				case "NetStream.Play.Start":
-					dispatchEvent(new Event(VideoEventType.SUPPORTED_VIDEO));
-					break;
+					
+				default :
+					dispatchEvent(new Event(code));
             }
 		}
 		
@@ -159,9 +152,13 @@ package com.minarto.media.video
 		/**
 		 * 
 		 */
-		public function seek($v:Number):void
+		public function setSeek($v:Number):void
 		{
 			__stream.seek($v || 0);
+		}
+		public function getSeek():Number
+		{
+			__stream.seek;
 		}
 		
 		
