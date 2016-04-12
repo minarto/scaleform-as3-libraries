@@ -10,7 +10,7 @@ package com.minarto.graphics
 	 * @author Minarto
 	 * 
 	 */	
-	public function drawArcEllipse($g:Graphics, $x:Number, $y:Number, $radius:Number, $yradius:Number, $startAngle:Number, $angle:Number):void
+	public function drawArc($g:Graphics, $x:Number, $y:Number, $radius:Number, $yradius:Number, $startAngle:Number, $angle:Number):void
 	{
 		var angle:Number = Math.abs($angle);
 		if (angle >= 360)
