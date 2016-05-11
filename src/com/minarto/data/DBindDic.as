@@ -1,17 +1,17 @@
 package com.minarto.data
 {
-	public class DBindDic
+	public class DateBindDic
 	{
 		static private const _dic:* = {};
 		
 		
-		static public function get($delay:Number=0.1):DBind
+		static public function get($delay:Number=0.1):DateBind
 		{
-			var db:DBind = _dic[$delay];
+			var db:DateBind = _dic[$delay];
 			
 			if (!db)
 			{
-				_dic[$delay] = db = new DBind;
+				_dic[$delay] = db = new DateBind;
 				db.init($delay);
 			}
 			
