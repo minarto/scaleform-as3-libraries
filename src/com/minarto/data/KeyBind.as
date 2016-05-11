@@ -119,7 +119,7 @@ package com.minarto.data
 		 * @param	$altKey
 		 * @param	$shiftKey
 		 */
-		public function setKey($keyBind:String, $type:String, $keyCode:uint, $ctrlKey:Boolean, $altKey:Boolean, $shiftKey:Boolean):Void
+		public function setKey($keyBind:String, $type:String, $keyCode:uint, $ctrlKey:Boolean, $altKey:Boolean, $shiftKey:Boolean):void
 		{
 			var e:String = arguments.slice(1).join(".");
 			
@@ -138,7 +138,7 @@ package com.minarto.data
 		 * 
 		 * @param	$BindKey
 		 */
-		public function delKey($keyBind:String):Void
+		public function delKey($keyBind:String):void
 		{
 			var e:String;
 			
