@@ -3,7 +3,7 @@ package com.minarto.data
 	import flash.utils.*;
 	
 
-	public class DBind extends Bind
+	public class DateBind extends Bind
 	{
 		static private const bind:Bind = new Bind;
 		
